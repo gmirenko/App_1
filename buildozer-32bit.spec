@@ -7,7 +7,7 @@ title = Valeria
 package.name = App_1
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.wiseplat
+package.domain = github.com/gmirenko/App_1
 
 # (str) Source code where the main.py live
 source.dir = .
