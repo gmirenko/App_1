@@ -1,63 +1,123 @@
 import os
 os.environ['KIVY_GL_BACKEND'] = 'angle_sdl2'
-from kivy.uix.button import Button
-from kivy.uix.widget import Widget
-from kivy.uix.label import Label
+
+from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
-from kivy.app import App
-from kivy.graphics import Color, Rectangle
-from random import random as r
-from functools import partial
+from kivy.properties import StringProperty, ListProperty
+
+from kivymd.app import MDApp
+from kivymd.theming import ThemableBehavior
+from kivymd.uix.list import OneLineIconListItem, MDList
+
+from kivymd.uix.floatlayout import MDFloatLayout
+from kivymd.uix.tab import MDTabsBase
+from kivymd.icon_definitions import md_icons
+from kivymd.font_definitions import fonts
+
+KV = '''
+# Menu item in the DrawerList list.
+<ItemDrawer>:
+    theme_text_color: "Custom"
+    on_release: self.parent.set_color_item(self)
+    IconLeftWidget:
+        id: icon
+        icon: root.icon
+        theme_text_color: "Custom"
+        text_color: root.text_color
+<ContentNavigationDrawer>:
+    orientation: "vertical"
+    padding: "8dp"
+    spacing: "8dp"
+    AnchorLayout:
+        anchor_x: "left"
+        size_hint_y: None
+        height: avatar.height
+        Image:
+            id: avatar
+            size_hint: None, None
+            size: "56dp", "56dp"
+            source: "data/logo/kivy-icon-256.png"
+    MDLabel:
+        text: "KivyMD library"
+        font_style: "Button"
+        size_hint_y: None
+        height: self.texture_size[1]
+    MDLabel:
+        text: "kivydevelopment@gmail.com"
+        font_style: "Caption"
+        size_hint_y: None
+        height: self.texture_size[1]
+    ScrollView:
+        DrawerList:
+            id: md_list
+Screen:
+    MDNavigationLayout:
+        ScreenManager:
+            Screen:
+                BoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        title: "Приложение для Валерии"
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state('open')]]
+                    MDTabs:
+                        id: tabs
+                        on_tab_switch: app.on_tab_switch(*args)
+        MDNavigationDrawer:
+            id: nav_drawer
+            ContentNavigationDrawer:
+                id: content_drawer
+'''
+
+class Tab(MDFloatLayout, MDTabsBase):
+    pass
+
+class ContentNavigationDrawer(BoxLayout):
+    pass
 
 
-class StressCanvasApp(App):
+class ItemDrawer(OneLineIconListItem):
+    icon = StringProperty()
+    text_color = ListProperty((0, 0, 0, 1))
 
-    def add_rects(self, label, wid, count, *largs):
-        label.text = str(int(label.text) + count)
-        with wid.canvas:
-            for x in range(count):
-                Color(r(), 1, 1, mode='hsv')
-                Rectangle(pos=(r() * wid.width + wid.x,
-                               r() * wid.height + wid.y), size=(20, 20))
 
-    def double_rects(self, label, wid, *largs):
-        count = int(label.text)
-        self.add_rects(label, wid, count, *largs)
+class DrawerList(ThemableBehavior, MDList):
+    def set_color_item(self, instance_item):
+        """Called when tap on a menu item."""
 
-    def reset_rects(self, label, wid, *largs):
-        label.text = '0'
-        wid.canvas.clear()
+        # Set the color of the icon and text for the menu item.
+        for item in self.children:
+            if item.text_color == self.theme_cls.primary_color:
+                item.text_color = self.theme_cls.text_color
+                break
+        instance_item.text_color = self.theme_cls.primary_color
 
+
+class Valeria (MDApp):
     def build(self):
-        wid = Widget()
+        return Builder.load_string(KV)
 
-        label = Label(text='0')
+    def on_start(self, fn_regular=None):
+        icons_item = {
+            "folder": "Мои файлы",
+            "account-multiple": "Поделиться со всеми",
+            "star": "Запустить",
+            "history": "Сбросить",
+            "checkbox-marked": "Поделиться со мной",
+            "upload": "Загрузить",
+        }
+        for icon_name in icons_item.keys():
+            self.root.ids.content_drawer.ids.md_list.add_widget(
+                ItemDrawer(icon=icon_name, text=icons_item[icon_name])
+            )
+        # for name_tab in list(md_icons.keys())[15:30]:
+        #     self.root.ids.tabs.add_widget(Tab(icon=name_tab, title=name_tab))
 
-        btn_add100 = Button(text='+ 100 rects',
-                            on_press=partial(self.add_rects, label, wid, 100))
-
-        btn_add500 = Button(text='+ 500 rects',
-                            on_press=partial(self.add_rects, label, wid, 500))
-
-        btn_double = Button(text='x 2',
-                            on_press=partial(self.double_rects, label, wid))
-
-        btn_reset = Button(text='Reset',
-                           on_press=partial(self.reset_rects, label, wid))
-
-        layout = BoxLayout(size_hint=(1, None), height=50)
-        layout.add_widget(btn_add100)
-        layout.add_widget(btn_add500)
-        layout.add_widget(btn_double)
-        layout.add_widget(btn_reset)
-        layout.add_widget(label)
-
-        root = BoxLayout(orientation='vertical')
-        root.add_widget(wid)
-        root.add_widget(layout)
-
-        return root
+        for icon_name, name_tab in icons_item.items():
+            self.root.ids.tabs.add_widget(
+                Tab(text=f"[ref={name_tab}][font={fonts[-1]['fn_regular']}]{md_icons[icon_name]}[/font][/ref] {name_tab}"
+                )
+            )
 
 
-if __name__ == '__main__':
-    StressCanvasApp().run()
+Valeria().run()
