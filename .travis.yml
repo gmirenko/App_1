@@ -9,10 +9,10 @@ install:
   - sudo apt -y install python3-distutils
   - sudo apt -y install python3-pip
   - sudo apt install -y git
-  - git clone https://github.com/kivy/buildozer.git
+  - git clone https://github.com/kivy/buildozer_64bit.spec.git
   - python3 -m site
   - ls -l
-  - cd buildozer
+  - cd buildozer_64bit.spec
   - ls -l
   - python3 setup.py install
   - ls -l
@@ -25,8 +25,8 @@ install:
   - export PATH=$PATH:~/.local/bin/
   - ls -la
   - echo "TODO COMPILE 32bit"
-  - yes | cp -f buildozer-32bit.spec buildozer.spec
-  - yes | travis_wait 30 buildozer android debug
+  - yes | cp -f buildozer_64bit.spec-32bit.spec buildozer_64bit.spec.spec
+  - yes | travis_wait 30 buildozer_64bit.spec android debug
   - ls -la
   - ls bin/ -l
   - echo "TODO"
@@ -34,10 +34,10 @@ install:
   - dpl releases --token $My_TOKEN_1 --file "bin/App_1-0.1-armeabi-v7a-debug.apk" --tag_name "v.0.1"
   - echo "TODO COMPILE 64bit"
   - ls -la
-  - rm -r -f .buildozer
+  - rm -r -f .buildozer_64bit.spec
   - ls -la
-  - yes | cp -f buildozer-64bit.spec buildozer.spec
-  - yes | travis_wait 30 buildozer android debug
+  - yes | cp -f buildozer_64bit.spec-64bit.spec buildozer_64bit.spec.spec
+  - yes | travis_wait 30 buildozer_64bit.spec android debug
   - ls -la
   - ls bin/ -l
   - echo "TODO"
