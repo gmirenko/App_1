@@ -122,7 +122,7 @@ fullscreen = 0
 
 # (bool) If True, then skip trying to update the Android sdk
 # This can be useful to avoid excess Internet downloads or save time
-# when an update is due and you just want to test/buildozer-64bit.spec your package
+# when an update is due and you just want to test/build your package
 # android.skip_update = False
 
 # (bool) If True, then automatically accept SDK license
@@ -148,7 +148,7 @@ fullscreen = 0
 
 # (list) List of Java .jar files to add to the libs so that pyjnius can access
 # their classes. Don't add jars that you do not need, since extra jars can slow
-# down the buildozer-64bit.spec process. Allows wildcards matching, for example:
+# down the build process. Allows wildcards matching, for example:
 # OUYA-ODK/libs/*.jar
 #android.add_jars = foo.jar,bar.jar,path/to/more/*.jar
 
@@ -225,10 +225,10 @@ fullscreen = 0
 # (bool) Copy library instead of making a libpymodules.so
 #android.copy_libs = 1
 
-# (str) The Android arch to buildozer-64bit.spec for, choices: armeabi-v7a, arm64-v8a, x86, x86_64
-android.arch = armeabi-v7a
+# (str) The Android arch to build for, choices: armeabi-v7a, arm64-v8a, x86, x86_64
+android.arch = arm64-v8a
 
-# (int) overrides automatic versionCode computation (used in buildozer-64bit.spec.gradle)
+# (int) overrides automatic versionCode computation (used in build.gradle)
 # this is not the same as app version and should only be edited if you know what you're doing
 # android.numeric_version = 1
 
@@ -257,7 +257,7 @@ android.allow_backup = True
 # (str) python-for-android git clone directory (if empty, it will be automatically cloned from github)
 #p4a.source_dir =
 
-# (str) The directory in which python-for-android should look for your own buildozer-64bit.spec recipes (if any)
+# (str) The directory in which python-for-android should look for your own build recipes (if any)
 #p4a.local_recipes =
 
 # (str) Filename to the hook for p4a
@@ -313,10 +313,10 @@ log_level = 1
 # (int) Display warning if buildozer is run as root (0 = False, 1 = True)
 warn_on_root = 1
 
-# (str) Path to buildozer-64bit.spec artifact storage, absolute or relative to spec file
+# (str) Path to build artifact storage, absolute or relative to spec file
 # build_dir = ./.buildozer
 
-# (str) Path to buildozer-64bit.spec output (i.e. .apk, .ipa) storage
+# (str) Path to build output (i.e. .apk, .ipa) storage
 # bin_dir = ./bin
 
 #    -----------------------------------------------------------------------------
