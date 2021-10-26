@@ -31,7 +31,7 @@ install:
   - ls bin/ -l
   - echo "TODO"
   - gem install dpl --pre
-  - dpl releases --token $My_TOKEN_2 --file "bin/App_1-0.3-armeabi-v7a-debug.apk" --tag_name "v.0.3"
+  - dpl releases --token $App_TOKEN_2 --file "bin/App_1-0.3-armeabi-v7a-debug.apk" --tag_name "v.0.3"
   - echo "TODO COMPILE 64bit"
   - ls -la
   - rm -r -f .buildozer
@@ -42,5 +42,6 @@ install:
   - ls bin/ -l
   - echo "TODO"
   - gem install dpl --pre
-  - dpl releases --token $My_TOKEN_2 --file "bin/App_1-0.3-arm64-v8a-debug.apk" --tag_name "v.0.3"
+  - dpl releases --token $App_TOKEN_2 --file "bin/App_1-0.3-arm64-v8a-debug.apk" --tag_name "v.0.3"
+script:
   - echo "OK"
