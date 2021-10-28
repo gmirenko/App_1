@@ -28,7 +28,7 @@ source.dir = .
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.3
+version = 0.2
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
@@ -355,3 +355,4 @@ warn_on_root = 1
 #
 #    Then, invoke the command line with the "demo" profile:
 #
+#buildozer --profile demo android debug
